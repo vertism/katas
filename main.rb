@@ -1,26 +1,21 @@
 #!/usr/bin/env ruby
 
 class LookAndSay
-
   def run(initial, iterations)
-    current = 0
+    current = initial
     values = iterations.times.map do |i|
-      if i == 0
-        current = initial
-      else
-        current = nextNumber(current)
-        current
-      end
+      current = nextNumber(current) if i > 0
+      current
     end
 
     values.join(', ')
   end
 
   def nextNumber(number)
-    chunked = number.to_s.chars.chunk_while{ |a, b| a == b }.to_a
-    chunked.map do |i|
-      [i.size, i[0]]
-    end.flatten.join('')
+    chunked = number.to_s.chars.chunk_while{ |a, b| a == b }
+    chunked.flat_map do |chunk|
+      [chunk.size, chunk.first]
+    end.join
   end
 end
 
